@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -226,9 +226,15 @@
                                 <exclude reference="gxz-yc-kxH"/>
                                 <exclude reference="idt-9w-Uxw"/>
                                 <exclude reference="m9d-yk-YUC"/>
+                                <exclude reference="DRC-1y-J6M"/>
                                 <exclude reference="OTh-Hz-bqa"/>
                                 <exclude reference="cDP-Qt-u0A"/>
+                                <exclude reference="MSx-xe-HfJ"/>
+                                <exclude reference="V7b-O1-cjd"/>
+                                <exclude reference="gml-5a-R1L"/>
                                 <exclude reference="uhy-QU-M5x"/>
+                                <exclude reference="00n-0S-Ade"/>
+                                <exclude reference="EFt-ca-J0i"/>
                                 <exclude reference="gJ8-gz-mZ5"/>
                                 <exclude reference="uIf-Il-Ftr"/>
                             </mask>

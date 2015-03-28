@@ -71,15 +71,15 @@ UINavigationControllerDelegate, UITextFieldDelegate
         presentViewController(activityViewController, animated: true, completion: nil)
     }
 
-
-    func imagePickerController(picker: UIImagePickerController,
-        didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!) {
-        self.imagePickerView.image = image
-            
-        //The Share button can be shown once an image is chosen.
-        shareButton.enabled = true
-
-        self.dismissViewControllerAnimated(true, completion: nil)
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: NSDictionary) {
+            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                imagePickerView.image = image
+                
+                //The Share button can be shown once an image is chosen.
+                shareButton.enabled = true
+            }
+            self.dismissViewControllerAnimated(true, completion: nil)
     }
 
 
