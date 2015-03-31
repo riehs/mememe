@@ -10,28 +10,22 @@ import UIKit
 
 class MemeCollectionViewController: UICollectionViewController
 {
-    var memes: [Meme]!
     
-    override func viewDidLoad() {
 
-        let applicationDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
-        memes = applicationDelegate.memes
-    }
-    
-    
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.memes.count
+        return Memes.sharedInstance().memes.count
     }
     
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CustomMemeCell", forIndexPath: indexPath) as UICollectionViewCell
-        let meme = memes[indexPath.item]
+        let meme = Memes.sharedInstance().memes[indexPath.item]
         
         
         //A memed image displays in each cell.
-        cell.backgroundView = UIImageView(image: meme.memedImage)
+        //The memed image must be converted into a UIImage, because it is stored in the meme object as NSData. (This is necessary to store the image in Core Data.)
+        cell.backgroundView = UIImageView(image: UIImage(data: meme.memedImage))
         
         return cell
     }
@@ -44,7 +38,7 @@ class MemeCollectionViewController: UICollectionViewController
         var resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as MemeDetailViewController
         self.navigationController?.pushViewController(resultVC, animated: true)
 
-        resultVC.meme = self.memes[indexPath.row]
+        resultVC.meme = Memes.sharedInstance().memes[indexPath.row]
     }
 
 }

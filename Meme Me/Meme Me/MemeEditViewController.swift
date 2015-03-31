@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class MemeEditViewController: UIViewController, UIImagePickerControllerDelegate,
 UINavigationControllerDelegate, UITextFieldDelegate
@@ -43,6 +44,10 @@ UINavigationControllerDelegate, UITextFieldDelegate
         launchImagePicker(UIImagePickerControllerSourceType.Camera)
     }
     
+    //Useful for saving data into the Core Data context.
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+    }
     
     //Except for the source type, the process for launching the camera to use a newly-taken photo is identical to the process for picking an image from the album.
     func launchImagePicker(souceType: UIImagePickerControllerSourceType)
@@ -57,18 +62,25 @@ UINavigationControllerDelegate, UITextFieldDelegate
     
     //When the meme is shared, it is also saved in the memes array.
     @IBAction func shareMeme(sender: AnyObject) {
+        
+        CoreDataStackManager.sharedInstance().saveContext()
 
         let memedImage = self.generateMemedImage()
         
-        let meme = Meme(topText: self.topText.text, bottomText: self.bottomText.text, image: self.imagePickerView.image!, memedImage: memedImage)
+        let meme = Meme(topText: self.topText.text, bottomText: self.bottomText.text, image: self.imagePickerView.image!, memedImage: memedImage, context: self.sharedContext)
+
+        //Same the meme into the memes array.
+        Memes.sharedInstance().memes.append(meme)
         
-        (UIApplication.sharedApplication().delegate as AppDelegate).memes.append(meme)
+        //Now that the meme has been saved into the array, the Core Data context is saved.
+        CoreDataStackManager.sharedInstance().saveContext()
         
         let activityViewController = UIActivityViewController(
             activityItems: [memedImage as UIImage],
             applicationActivities: nil)
         
         presentViewController(activityViewController, animated: true, completion: nil)
+
     }
 
     
@@ -98,6 +110,9 @@ UINavigationControllerDelegate, UITextFieldDelegate
     
     override func viewDidLoad() {
         
+        //This loads memes from Core Data into the memes array.
+        Memes.sharedInstance().memes = fetchAllMemes()
+        
         self.topText.delegate = self
         self.bottomText.delegate = self
         
@@ -113,6 +128,18 @@ UINavigationControllerDelegate, UITextFieldDelegate
         
         //The share button cannot be enabled until after an image is chosen.
         shareButton.enabled = false
+    }
+    
+    func fetchAllMemes() -> [Meme] {
+        let error: NSErrorPointer = nil
+        let fetchRequest = NSFetchRequest(entityName: "Meme")
+        let results = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        
+        if error != nil {
+            println("Error in fetchAllMemes(): \(error)")
+        }
+        
+        return results as [Meme]
     }
     
     

@@ -11,28 +11,21 @@ import UIKit
 
 class MemeTableViewController: UITableViewController
 {
-    var memes: [Meme]!
-    
-    override func viewDidLoad() {
 
-        // The shared model is stored in the AppDelegate class.
-        let applicationDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
-        memes = applicationDelegate.memes
-    }
-    
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.memes.count
+        return Memes.sharedInstance().memes.count
     }
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("memeCell") as UITableViewCell
-        let meme = self.memes[indexPath.row]
+        let meme = Memes.sharedInstance().memes[indexPath.row]
         
         //The memed image and the top line of text display for each meme.
-        cell.imageView?.image = meme.memedImage
+        //The memed image must be converted into a UIImage, because it is stored in the meme object as NSData. (This is necessary to store the image in Core Data.)
+        cell.imageView?.image = UIImage(data: meme.memedImage)
         cell.textLabel?.text = meme.topText
         
         return cell
@@ -50,6 +43,6 @@ class MemeTableViewController: UITableViewController
         var resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as MemeDetailViewController
         self.navigationController?.pushViewController(resultVC, animated: true)
         
-        resultVC.meme = self.memes[indexPath.row]
+        resultVC.meme = Memes.sharedInstance().memes[indexPath.row]
     }
 }
