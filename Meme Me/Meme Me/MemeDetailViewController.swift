@@ -1,6 +1,6 @@
 //
 //  MemeDetailViewController.swift
-//  BondVillains
+//  Meme Me
 //
 //  Created by Daniel Riehs on 3/14/15.
 //  Copyright (c) 2015 Daniel Riehs. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  MemeEditViewController.swift
-//  Pick and Image
+//  Meme Me
 //
 //  Created by Daniel Riehs on 3/13/15.
 //  Copyright (c) 2015 Daniel Riehs. All rights reserved.
@@ -69,7 +69,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
         
         let meme = Meme(topText: self.topText.text, bottomText: self.bottomText.text, image: self.imagePickerView.image!, memedImage: memedImage, context: self.sharedContext)
 
-        //Same the meme into the memes array.
+        //Save the meme into the memes array.
         Memes.sharedInstance().memes.append(meme)
         
         //Now that the meme has been saved into the array, the Core Data context is saved.
