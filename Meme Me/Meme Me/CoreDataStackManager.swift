@@ -6,10 +6,8 @@
 //  Copyright (c) 2015 Daniel Riehs. All rights reserved.
 //
 
-
 import Foundation
 import CoreData
-
 
 private let SQLITE_FILE_NAME = "MemeMe.sqlite"
 
@@ -32,7 +30,7 @@ class CoreDataStackManager {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as NSURL
+        return urls[urls.count-1] as! NSURL
         }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {

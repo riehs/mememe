@@ -84,7 +84,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
     }
 
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: NSDictionary) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 imagePickerView.image = image
                 
@@ -139,7 +139,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
             println("Error in fetchAllMemes(): \(error)")
         }
         
-        return results as [Meme]
+        return results as! [Meme]
     }
     
     
@@ -193,7 +193,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         //The vertical slide distance is set dynamically depending on the height of the keyboard.
         let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as NSValue
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.CGRectValue().height
     }
     

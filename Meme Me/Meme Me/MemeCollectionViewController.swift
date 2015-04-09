@@ -19,7 +19,7 @@ class MemeCollectionViewController: UICollectionViewController
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CustomMemeCell", forIndexPath: indexPath) as UICollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CustomMemeCell", forIndexPath: indexPath) as! UICollectionViewCell
         let meme = Memes.sharedInstance().memes[indexPath.item]
         
         
@@ -35,7 +35,7 @@ class MemeCollectionViewController: UICollectionViewController
     override func collectionView(tableView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
         var storyboard = UIStoryboard (name: "Main", bundle: nil)
-        var resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as MemeDetailViewController
+        var resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as! MemeDetailViewController
         self.navigationController?.pushViewController(resultVC, animated: true)
 
         resultVC.meme = Memes.sharedInstance().memes[indexPath.row]
