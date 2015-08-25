@@ -24,8 +24,7 @@ class MemeCollectionViewController: UICollectionViewController
         
         
         //A memed image displays in each cell.
-        //The memed image must be converted into a UIImage, because it is stored in the meme object as NSData. (This is necessary to store the image in Core Data.)
-        cell.backgroundView = UIImageView(image: UIImage(data: meme.memedImage))
+        cell.backgroundView = UIImageView(image: meme.memedImage)
         
         return cell
     }

@@ -19,8 +19,18 @@ class Meme: NSManagedObject {
     //Promoting these four properties to Core Data attributes by prefixing them with @NSManaged.
     @NSManaged var topText: String
     @NSManaged var bottomText: String
-    @NSManaged var image: NSData
-    @NSManaged var memedImage: NSData
+    @NSManaged var image: UIImage
+    @NSManaged var memedImage: UIImage
+    
+    
+    //The UIImages are stored in Core Data as type "Transformable".
+    //They can also be stored as type "Binary Data" if they are first converted to NSData objects.
+    //
+    //Code to create an NSData object by passing in a UIImage:
+    //dataImage = UIImageJPEGRepresentation(image, 1)
+    //
+    //Code to create a UIImage by passing in an NSData object:
+    //image = UIImage(data: dataImage)
     
 
     //The standard Core Data init method.
@@ -40,9 +50,8 @@ class Meme: NSManagedObject {
         self.topText = topText
         self.bottomText = bottomText
         
-        //The images must be converted to NSData objects to be stored in Core Data. The '1' means that the images are stored at the highest quality.
-        self.image = UIImageJPEGRepresentation(image, 1)
-        self.memedImage = UIImageJPEGRepresentation(memedImage, 1)
+        self.image = image
+        self.memedImage = memedImage
     }
     
 }

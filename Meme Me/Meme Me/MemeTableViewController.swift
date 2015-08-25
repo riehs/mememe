@@ -23,8 +23,7 @@ class MemeTableViewController: UITableViewController
         let meme = Memes.sharedInstance().memes[indexPath.row]
         
         //The memed image and the top line of text display for each meme.
-        //The memed image must be converted into a UIImage, because it is stored in the meme object as NSData. (This is necessary to store the image in Core Data.)
-        cell.imageView?.image = UIImage(data: meme.memedImage)
+        cell.imageView?.image = meme.memedImage
         cell.textLabel?.text = meme.topText
         
         return cell

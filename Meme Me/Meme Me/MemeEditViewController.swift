@@ -83,8 +83,8 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
     }
 
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject: AnyObject]) {
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 imagePickerView.image = image
                 

@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 Daniel Riehs. All rights reserved.
 //
 
+
 import Foundation
 import CoreData
+
 
 private let SQLITE_FILE_NAME = "MemeMe.sqlite"
 
