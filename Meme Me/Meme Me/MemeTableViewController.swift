@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class MemeTableViewController: UITableViewController
 {
@@ -42,5 +43,24 @@ class MemeTableViewController: UITableViewController
 		self.navigationController?.pushViewController(resultVC, animated: true)
 
 		resultVC.meme = Memes.sharedInstance().memes[indexPath.row]
+	}
+
+
+	//Deleting a meme:
+	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+		if editingStyle == UITableViewCellEditingStyle.Delete {
+
+			//Remove the deleted meme from the Core Data context.
+			CoreDataStackManager.sharedInstance().managedObjectContext?.deleteObject(Memes.sharedInstance().memes[indexPath.row] as NSManagedObject)
+
+			//Remove the deleted meme from the array.
+			Memes.sharedInstance().memes.removeAtIndex(indexPath.row)
+
+			//Save the Core Data context.
+			CoreDataStackManager.sharedInstance().saveContext()
+
+			//Delete the meme from the tableView.
+			tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+		}
 	}
 }
