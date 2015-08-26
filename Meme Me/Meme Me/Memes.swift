@@ -7,16 +7,15 @@
 //
 
 class Memes {
-    
-    var memes : [Meme] = [Meme]()
 
-    //Allows other classes to reference a common instance of the memes array.
-    class func sharedInstance() -> Memes {
-        
-        struct Singleton {
-            static var sharedInstance = Memes()
-        }
-        return Singleton.sharedInstance
-    }
-    
+	var memes : [Meme] = [Meme]()
+
+	//Allows other classes to reference a common instance of the memes array.
+	class func sharedInstance() -> Memes {
+
+		struct Singleton {
+			static var sharedInstance = Memes()
+		}
+		return Singleton.sharedInstance
+	}
 }
