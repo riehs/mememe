@@ -78,6 +78,7 @@
 				A23F8E1D1AB64FBB00C0B830 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		A23F8E1D1AB64FBB00C0B830 /* Products */ = {
 			isa = PBXGroup;

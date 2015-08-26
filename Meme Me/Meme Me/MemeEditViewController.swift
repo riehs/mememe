@@ -29,7 +29,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		NSStrokeColorAttributeName : UIColor.blackColor(),
 		NSForegroundColorAttributeName : UIColor.whiteColor(),
 		NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
-		
+
 		//If this number is positive, the text foreground color does not display.
 		NSStrokeWidthAttributeName : -3.0,
 	]
@@ -65,9 +65,9 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 		CoreDataStackManager.sharedInstance().saveContext()
 
-		let memedImage = self.generateMemedImage()
+		let memedImage = generateMemedImage()
 
-		let meme = Meme(topText: self.topText.text, bottomText: self.bottomText.text, image: self.imagePickerView.image!, memedImage: memedImage, context: self.sharedContext)
+		let meme = Meme(topText: topText.text, bottomText: bottomText.text, image: imagePickerView.image!, memedImage: memedImage, context: sharedContext)
 
 		//Save the meme into the memes array.
 		Memes.sharedInstance().memes.append(meme)
@@ -99,12 +99,12 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable	(UIImagePickerControllerSourceType.Camera)
 
 		//MemeEditViewController needs to be notified when the keyboard is shown in case screen view needs to be moved out of the way.
-		self.subscribeToKeyboardNotifications()
+		subscribeToKeyboardNotifications()
 	}
 
 
 	override func viewWillDisappear(animated: Bool) {
-		self.unsubscribeFromKeyboardNotifications()
+		unsubscribeFromKeyboardNotifications()
 	}
 
 
@@ -113,8 +113,8 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		//This loads memes from Core Data into the memes array.
 		Memes.sharedInstance().memes = fetchAllMemes()
 
-		self.topText.delegate = self
-		self.bottomText.delegate = self
+		topText.delegate = self
+		bottomText.delegate = self
 
 		topText.defaultTextAttributes = memeTextAttributes
 		bottomText.defaultTextAttributes = memeTextAttributes
@@ -202,8 +202,8 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	func generateMemedImage() -> UIImage
 	{
 		//The top navigation bar and bottom toolbar will not be included in the meme image.
-		self.topBar.hidden = true
-		self.bottomBar.hidden = true
+		topBar.hidden = true
+		bottomBar.hidden = true
 
 		//Saves the screen view as memedImage.
 		UIGraphicsBeginImageContext(self.view.frame.size)
@@ -212,8 +212,8 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		UIGraphicsEndImageContext()
 
 		//Unhiding the navigation bar and toolbar.
-		self.topBar.hidden = false
-		self.bottomBar.hidden = false
+		topBar.hidden = false
+		bottomBar.hidden = false
 
 		return memedImage
 	}
