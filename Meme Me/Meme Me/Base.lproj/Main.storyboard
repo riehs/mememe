@@ -17,6 +17,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LD7-a2-Xbx">
+                                <rect key="frame" x="0.0" y="17" width="375" height="650"/>
+                            </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ca-KB-HBV">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
@@ -35,9 +38,6 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Bvg-AZ-ZPg"/>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LD7-a2-Xbx">
-                                <rect key="frame" x="0.0" y="61" width="375" height="562"/>
-                            </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bkj-v5-9Zt">
                                 <rect key="frame" x="0.0" y="17" width="375" height="44"/>
                                 <items>
@@ -73,23 +73,18 @@
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="9Ca-KB-HBV" secondAttribute="bottom" id="6yW-4f-EyQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9Ca-KB-HBV" secondAttribute="trailing" constant="-16" id="7JW-Fn-bR7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bkj-v5-9Zt" secondAttribute="trailing" constant="-16" id="9yP-BV-G2n"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="LD7-a2-Xbx" secondAttribute="trailing" constant="-16" id="HrG-n3-Pr4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LD7-a2-Xbx" secondAttribute="trailing" constant="-16" id="ACj-mk-MLm"/>
+                            <constraint firstItem="NfG-xs-Var" firstAttribute="top" secondItem="bkj-v5-9Zt" secondAttribute="bottom" constant="77" id="Alz-Z7-v0V"/>
                             <constraint firstItem="NfG-xs-Var" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="IYg-yk-Nct"/>
                             <constraint firstItem="bkj-v5-9Zt" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" constant="17" id="OxJ-Fq-E05"/>
                             <constraint firstItem="bkj-v5-9Zt" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="QRJ-fh-JHA"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="LD7-a2-Xbx" secondAttribute="trailing" constant="-16" id="Shc-YV-xeT"/>
-                            <constraint firstItem="9Ca-KB-HBV" firstAttribute="top" secondItem="LD7-a2-Xbx" secondAttribute="bottom" id="Xbj-iQ-F3c"/>
                             <constraint firstItem="IFK-Fj-XjY" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="Xpk-fe-hTC"/>
                             <constraint firstItem="IFK-Fj-XjY" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="bM8-m8-djc"/>
                             <constraint firstItem="9Ca-KB-HBV" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="br8-e3-YBg"/>
-                            <constraint firstItem="LD7-a2-Xbx" firstAttribute="top" secondItem="NfG-xs-Var" secondAttribute="bottom" constant="-94" id="kux-if-aPC"/>
+                            <constraint firstItem="LD7-a2-Xbx" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" constant="17" id="h55-Gt-cWZ"/>
+                            <constraint firstItem="LD7-a2-Xbx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="kX6-oe-LOr"/>
                             <constraint firstItem="NfG-xs-Var" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="lZJ-yi-dxm"/>
-                            <constraint firstItem="LD7-a2-Xbx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="mqx-4D-8sr"/>
-                            <constraint firstItem="LD7-a2-Xbx" firstAttribute="top" secondItem="bkj-v5-9Zt" secondAttribute="bottom" id="nJK-hb-i1I"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="LD7-a2-Xbx" secondAttribute="trailing" constant="-16" id="oml-gC-WCe"/>
-                            <constraint firstItem="LD7-a2-Xbx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="s17-om-aHY"/>
-                            <constraint firstItem="LD7-a2-Xbx" firstAttribute="top" secondItem="bkj-v5-9Zt" secondAttribute="bottom" id="t6P-TV-IL9"/>
-                            <constraint firstItem="LD7-a2-Xbx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="xe5-tc-zLU"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="LD7-a2-Xbx" secondAttribute="bottom" id="weN-wR-Kfv"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="AH6-qO-qff"/>
