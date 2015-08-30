@@ -6,9 +6,13 @@
 //  Copyright (c) 2015 Daniel Riehs. All rights reserved.
 //
 
-class Memes {
+import Foundation
+
+class Memes: NSCoder {
 
 	var memes : [Meme] = [Meme]()
+
+	override init() {}
 
 	//Allows other classes to reference a common instance of the memes array.
 	class func sharedInstance() -> Memes {
@@ -17,5 +21,19 @@ class Memes {
 			static var sharedInstance = Memes()
 		}
 		return Singleton.sharedInstance
+	}
+
+
+	//Required for the class to conform to the NSCoding protocol.
+	required init(coder aDecoder: NSCoder) {
+		if let memes = aDecoder.decodeObjectForKey("memesArray") as? [Meme] {
+			self.memes = memes
+		}
+	}
+
+
+	//Required for the class to conform to the NSCoding protocol.
+	func encodeWithCoder(aCoder: NSCoder) {
+		aCoder.encodeObject(self.memes, forKey: "memesArray")
 	}
 }

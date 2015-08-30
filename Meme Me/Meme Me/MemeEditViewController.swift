@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 class MemeEditViewController: UIViewController, UIImagePickerControllerDelegate,
 UINavigationControllerDelegate, UITextFieldDelegate
@@ -35,6 +34,14 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	]
 
 
+	//Defining the file path where the archived data will be stored by the NSKeyedArchiver.
+	var filePath : String {
+		let manager = NSFileManager.defaultManager()
+		let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+		return url.URLByAppendingPathComponent("memesArray").path!
+	}
+
+
 	@IBAction func pickAnImage(sender: AnyObject) {
 		launchImagePicker(UIImagePickerControllerSourceType.PhotoLibrary)
 	}
@@ -44,10 +51,6 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		launchImagePicker(UIImagePickerControllerSourceType.Camera)
 	}
 
-	//Useful for saving data into the Core Data context.
-	var sharedContext: NSManagedObjectContext {
-		return CoreDataStackManager.sharedInstance().managedObjectContext!
-	}
 
 	//Except for the source type, the process for launching the camera to use a newly-taken photo is identical to the process for picking an image from the album.
 	func launchImagePicker(souceType: UIImagePickerControllerSourceType)
@@ -63,17 +66,15 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	//When the meme is shared, it is also saved in the memes array.
 	@IBAction func shareMeme(sender: AnyObject) {
 
-		CoreDataStackManager.sharedInstance().saveContext()
-
 		let memedImage = generateMemedImage()
 
-		let meme = Meme(topText: topText.text, bottomText: bottomText.text, image: imagePickerView.image!, memedImage: memedImage, context: sharedContext)
+		let meme = Meme(topText: topText.text, bottomText: bottomText.text, image: imagePickerView.image!, memedImage: memedImage)
 
 		//Save the meme into the memes array.
 		Memes.sharedInstance().memes.append(meme)
 
-		//Now that the meme has been saved into the array, the Core Data context is saved.
-		CoreDataStackManager.sharedInstance().saveContext()
+		//Saving the array to the file.
+		NSKeyedArchiver.archiveRootObject(Memes.sharedInstance().memes, toFile: filePath)
 
 		let activityViewController = UIActivityViewController(
 			activityItems: [memedImage as UIImage],
@@ -110,8 +111,10 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 	override func viewDidLoad() {
 
-		//This loads memes from Core Data into the memes array.
-		Memes.sharedInstance().memes = fetchAllMemes()
+		//Unarchiving the saved array.
+		if let memesArray = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? [Meme] {
+			Memes.sharedInstance().memes = memesArray
+		}
 
 		topText.delegate = self
 		bottomText.delegate = self
@@ -128,19 +131,6 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 		//The share button cannot be enabled until after an image is chosen.
 		shareButton.enabled = false
-	}
-
-
-	func fetchAllMemes() -> [Meme] {
-		let error: NSErrorPointer = nil
-		let fetchRequest = NSFetchRequest(entityName: "Meme")
-		let results = sharedContext.executeFetchRequest(fetchRequest, error: error)
-
-		if error != nil {
-			println("Error in fetchAllMemes(): \(error)")
-		}
-
-		return results as! [Meme]
 	}
 
 

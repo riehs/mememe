@@ -6,11 +6,19 @@
 //  Copyright (c) 2015 Daniel Riehs. All rights reserved.
 //
 
+//import Foundation
 import UIKit
-import CoreData
 
 class MemeTableViewController: UITableViewController
 {
+
+
+	//Determining the file path where the archived data is stored by the NSKeyedArchiver.
+	var filePath : String {
+		let manager = NSFileManager.defaultManager()
+		let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+		return url.URLByAppendingPathComponent("memesArray").path!
+	}
 
 
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -24,7 +32,7 @@ class MemeTableViewController: UITableViewController
 		let meme = Memes.sharedInstance().memes[indexPath.row]
 
 		//The memed image and the top line of text display for each meme.
-		cell.imageView?.image = meme.memedImage
+		cell.imageView?.image = UIImage(data: meme.memedImage)
 		cell.textLabel?.text = meme.topText
 
 		return cell
@@ -50,14 +58,11 @@ class MemeTableViewController: UITableViewController
 	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
 		if editingStyle == UITableViewCellEditingStyle.Delete {
 
-			//Remove the deleted meme from the Core Data context.
-			CoreDataStackManager.sharedInstance().managedObjectContext?.deleteObject(Memes.sharedInstance().memes[indexPath.row] as NSManagedObject)
-
 			//Remove the deleted meme from the array.
 			Memes.sharedInstance().memes.removeAtIndex(indexPath.row)
 
-			//Save the Core Data context.
-			CoreDataStackManager.sharedInstance().saveContext()
+			//Saving the array to the file.
+			NSKeyedArchiver.archiveRootObject(Memes.sharedInstance().memes, toFile: filePath)
 
 			//Delete the meme from the tableView.
 			tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)

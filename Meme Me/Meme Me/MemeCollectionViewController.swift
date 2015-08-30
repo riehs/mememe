@@ -24,7 +24,7 @@ class MemeCollectionViewController: UICollectionViewController
 
 
 		//A memed image displays in each cell.
-		cell.backgroundView = UIImageView(image: meme.memedImage)
+		cell.backgroundView = UIImageView(image: UIImage(data: meme.memedImage))
 
 		return cell
 	}
