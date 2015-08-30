@@ -56,7 +56,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		let imagePicker = UIImagePickerController()
 		imagePicker.delegate = self
 		imagePicker.sourceType = source
-		self.presentViewController(imagePicker, animated: true, completion: nil)
+		presentViewController(imagePicker, animated: true, completion: nil)
 	}
 
 
@@ -91,7 +91,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 				//The Share button can be shown once an image is chosen.
 				shareButton.enabled = true
 			}
-			self.dismissViewControllerAnimated(true, completion: nil)
+			dismissViewControllerAnimated(true, completion: nil)
 	}
 
 
@@ -177,7 +177,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		//The keyboard only slides away if the top text field is edited.
 		if bottomText.editing == true
 		{
-			self.view.frame.origin.y -= getKeyboardHeight(notification)
+			view.frame.origin.y -= getKeyboardHeight(notification)
 		}
 	}
 
@@ -186,7 +186,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		//The keyboard only slides away if the top text field is edited.
 		if bottomText.editing == true
 		{
-			self.view.frame.origin.y += getKeyboardHeight(notification)
+			view.frame.origin.y += getKeyboardHeight(notification)
 		}
 	}
 
@@ -206,8 +206,8 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		bottomBar.hidden = true
 
 		//Saves the screen view as memedImage.
-		UIGraphicsBeginImageContext(self.view.frame.size)
-		self.view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+		UIGraphicsBeginImageContext(view.frame.size)
+		view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
 		let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 
