@@ -87,7 +87,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject: AnyObject]) {
 			if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
 				imagePickerView.image = image
-				
+
 				//The Share button can be shown once an image is chosen.
 				shareButton.enabled = true
 			}
