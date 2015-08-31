@@ -35,7 +35,7 @@ class MemeCollectionViewController: UICollectionViewController
 	{
 		var storyboard = UIStoryboard (name: "Main", bundle: nil)
 		var resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as! MemeDetailViewController
-		self.navigationController?.pushViewController(resultVC, animated: true)
+		navigationController?.pushViewController(resultVC, animated: true)
 
 		resultVC.meme = Memes.sharedInstance().memes[indexPath.row]
 	}
