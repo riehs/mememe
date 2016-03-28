@@ -19,7 +19,7 @@ class MemeCollectionViewController: UICollectionViewController
 
 	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CustomMemeCell", forIndexPath: indexPath) as! UICollectionViewCell
+		let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CustomMemeCell", forIndexPath: indexPath) 
 		let meme = Memes.sharedInstance().memes[indexPath.item]
 
 
@@ -33,8 +33,8 @@ class MemeCollectionViewController: UICollectionViewController
 	//Selecting an item navigates the user to a detail view of the meme.
 	override func collectionView(tableView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 	{
-		var storyboard = UIStoryboard (name: "Main", bundle: nil)
-		var resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as! MemeDetailViewController
+		let storyboard = UIStoryboard (name: "Main", bundle: nil)
+		let resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as! MemeDetailViewController
 		navigationController?.pushViewController(resultVC, animated: true)
 
 		resultVC.meme = Memes.sharedInstance().memes[indexPath.row]

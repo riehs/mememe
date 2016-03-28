@@ -16,7 +16,7 @@ class MemeTableViewController: UITableViewController
 	//Determining the file path where the archived data is stored by the NSKeyedArchiver.
 	var filePath : String {
 		let manager = NSFileManager.defaultManager()
-		let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+		let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as NSURL
 		return url.URLByAppendingPathComponent("memesArray").path!
 	}
 
@@ -28,14 +28,14 @@ class MemeTableViewController: UITableViewController
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-		let cell = tableView.dequeueReusableCellWithIdentifier("memeCell") as! UITableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier("memeCell")
 		let meme = Memes.sharedInstance().memes[indexPath.row]
 
 		//The memed image and the top line of text display for each meme.
-		cell.imageView?.image = UIImage(data: meme.memedImage)
-		cell.textLabel?.text = meme.topText
+		cell!.imageView?.image = UIImage(data: meme.memedImage)
+		cell!.textLabel?.text = meme.topText
 
-		return cell
+		return cell!
 	}
 
 
@@ -46,8 +46,8 @@ class MemeTableViewController: UITableViewController
 
 	//Selecting a row navigates the user to a detail view of the meme.
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		var storyboard = UIStoryboard (name: "Main", bundle: nil)
-		var resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as! MemeDetailViewController
+		let storyboard = UIStoryboard (name: "Main", bundle: nil)
+		let resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as! MemeDetailViewController
 		navigationController?.pushViewController(resultVC, animated: true)
 
 		resultVC.meme = Memes.sharedInstance().memes[indexPath.row]

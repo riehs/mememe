@@ -37,8 +37,8 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	//Defining the file path where the archived data will be stored by the NSKeyedArchiver.
 	var filePath : String {
 		let manager = NSFileManager.defaultManager()
-		let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
-		return url.URLByAppendingPathComponent("memesArray").path!
+		let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
+		return url!.URLByAppendingPathComponent("memesArray").path!
 	}
 
 
@@ -68,7 +68,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 		let memedImage = generateMemedImage()
 
-		let meme = Meme(topText: topText.text, bottomText: bottomText.text, image: imagePickerView.image!, memedImage: memedImage)
+		let meme = Meme(topText: topText.text!, bottomText: bottomText.text!, image: imagePickerView.image!, memedImage: memedImage)
 
 		//Save the meme into the memes array.
 		Memes.sharedInstance().memes.append(meme)
@@ -85,7 +85,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	}
 
 
-	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject: AnyObject]) {
+	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
 			if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
 				imagePickerView.image = image
 
@@ -149,8 +149,8 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 	//Called in viewWillAppear.
 	func subscribeToKeyboardNotifications() {
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:"	, name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:"	, name: UIKeyboardWillHideNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditViewController.keyboardWillShow(_:))	, name: UIKeyboardWillShowNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditViewController.keyboardWillHide(_:))	, name: UIKeyboardWillHideNotification, object: nil)
 	}
 
 
