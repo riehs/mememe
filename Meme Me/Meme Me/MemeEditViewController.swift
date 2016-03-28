@@ -46,7 +46,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 	//Useful for saving data into the Core Data context.
 	var sharedContext: NSManagedObjectContext {
-		return CoreDataStackManager.sharedInstance().managedObjectContext!
+		return CoreDataStackManager.sharedInstance().managedObjectContext
 	}
 
 	//Except for the source type, the process for launching the camera to use a newly-taken photo is identical to the process for picking an image from the album.
@@ -84,14 +84,14 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	}
 
 
-	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject: AnyObject]) {
-			if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-				imagePickerView.image = image
-
-				//The Share button can be shown once an image is chosen.
-				shareButton.enabled = true
-			}
-			dismissViewControllerAnimated(true, completion: nil)
+	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
+		if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+			imagePickerView.image = image
+			
+			//The Share button can be shown once an image is chosen.
+			shareButton.enabled = true
+		}
+		dismissViewControllerAnimated(true, completion: nil)
 	}
 
 
@@ -130,16 +130,22 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		shareButton.enabled = false
 	}
 
-
+	
 	func fetchAllMemes() -> [Meme] {
 		let error: NSErrorPointer = nil
 		let fetchRequest = NSFetchRequest(entityName: "Meme")
-		let results = sharedContext.executeFetchRequest(fetchRequest)
-
+		let results: [AnyObject]?
+		do {
+			results = try sharedContext.executeFetchRequest(fetchRequest)
+		} catch let error1 as NSError {
+			error.memory = error1
+			results = nil
+		}
+		
 		if error != nil {
 			print("Error in fetchAllMemes(): \(error)")
 		}
-
+		
 		return results as! [Meme]
 	}
 
@@ -159,8 +165,8 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 	//Called in viewWillAppear.
 	func subscribeToKeyboardNotifications() {
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:"	, name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:"	, name: UIKeyboardWillHideNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditViewController.keyboardWillShow(_:))	, name: UIKeyboardWillShowNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditViewController.keyboardWillHide(_:))	, name: UIKeyboardWillHideNotification, object: nil)
 	}
 
 

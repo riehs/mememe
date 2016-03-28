@@ -19,15 +19,15 @@ class MemeTableViewController: UITableViewController
 
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
-		let cell = tableView.dequeueReusableCellWithIdentifier("memeCell") as! UITableViewCell
+		
+		let cell = tableView.dequeueReusableCellWithIdentifier("memeCell")
 		let meme = Memes.sharedInstance().memes[indexPath.row]
-
+		
 		//The memed image and the top line of text display for each meme.
-		cell.imageView?.image = meme.memedImage
-		cell.textLabel?.text = meme.topText
-
-		return cell
+		cell!.imageView?.image = meme.memedImage
+		cell!.textLabel?.text = meme.topText
+		
+		return cell!
 	}
 
 
@@ -38,8 +38,8 @@ class MemeTableViewController: UITableViewController
 
 	//Selecting a row navigates the user to a detail view of the meme.
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		var storyboard = UIStoryboard (name: "Main", bundle: nil)
-		var resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as! MemeDetailViewController
+		let storyboard = UIStoryboard (name: "Main", bundle: nil)
+		let resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as! MemeDetailViewController
 		navigationController?.pushViewController(resultVC, animated: true)
 
 		resultVC.meme = Memes.sharedInstance().memes[indexPath.row]
@@ -51,7 +51,7 @@ class MemeTableViewController: UITableViewController
 		if editingStyle == UITableViewCellEditingStyle.Delete {
 
 			//Remove the deleted meme from the Core Data context.
-			CoreDataStackManager.sharedInstance().managedObjectContext?.deleteObject(Memes.sharedInstance().memes[indexPath.row] as NSManagedObject)
+			CoreDataStackManager.sharedInstance().managedObjectContext.deleteObject(Memes.sharedInstance().memes[indexPath.row] as NSManagedObject)
 
 			//Remove the deleted meme from the array.
 			Memes.sharedInstance().memes.removeAtIndex(indexPath.row)
