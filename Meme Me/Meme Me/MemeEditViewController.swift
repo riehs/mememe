@@ -67,7 +67,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 		let memedImage = generateMemedImage()
 
-		let meme = Meme(topText: topText.text, bottomText: bottomText.text, image: imagePickerView.image!, memedImage: memedImage, context: sharedContext)
+		let meme = Meme(topText: topText.text!, bottomText: bottomText.text!, image: imagePickerView.image!, memedImage: memedImage, context: sharedContext)
 
 		//Save the meme into the memes array.
 		Memes.sharedInstance().memes.append(meme)
@@ -134,10 +134,10 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	func fetchAllMemes() -> [Meme] {
 		let error: NSErrorPointer = nil
 		let fetchRequest = NSFetchRequest(entityName: "Meme")
-		let results = sharedContext.executeFetchRequest(fetchRequest, error: error)
+		let results = sharedContext.executeFetchRequest(fetchRequest)
 
 		if error != nil {
-			println("Error in fetchAllMemes(): \(error)")
+			print("Error in fetchAllMemes(): \(error)")
 		}
 
 		return results as! [Meme]

@@ -33,7 +33,7 @@ class MemeCollectionViewController: UICollectionViewController
 	//Selecting an item navigates the user to a detail view of the meme.
 	override func collectionView(tableView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 	{
-		var storyboard = UIStoryboard (name: "Main", bundle: nil)
+		let storyboard = UIStoryboard (name: "Main", bundle: nil)
 		var resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as! MemeDetailViewController
 		navigationController?.pushViewController(resultVC, animated: true)
 

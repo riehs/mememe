@@ -48,7 +48,7 @@ class CoreDataStackManager {
 		let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("MemeMe.sqlite")
 		var error: NSError? = nil
 		var failureReason = "There was an error creating or loading the application's saved data."
-		if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+		if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil) == nil {
 			coordinator = nil
 			// Report any error we got.
 			var dict = [String: AnyObject]()
@@ -81,7 +81,7 @@ class CoreDataStackManager {
 	func saveContext () {
 		if let moc = self.managedObjectContext {
 			var error: NSError? = nil
-			if moc.hasChanges && !moc.save(&error) {
+			if moc.hasChanges && !moc.save() {
 				// Replace this implementation with code to handle the error appropriately.
 				// abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 				NSLog("Unresolved error \(error), \(error!.userInfo)")
