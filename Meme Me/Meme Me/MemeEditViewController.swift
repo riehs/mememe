@@ -25,46 +25,46 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	@IBOutlet weak var bottomBar: UIToolbar!
 
 	let memeTextAttributes = [
-		NSStrokeColorAttributeName : UIColor.blackColor(),
-		NSForegroundColorAttributeName : UIColor.whiteColor(),
+		NSStrokeColorAttributeName : UIColor.black,
+		NSForegroundColorAttributeName : UIColor.white,
 		NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
 
 		//If this number is positive, the text foreground color does not display.
 		NSStrokeWidthAttributeName : -3.0,
-	]
+	] as [String : Any]
 
 
 	//Defining the file path where the archived data will be stored by the NSKeyedArchiver.
 	var filePath : String {
-		let manager = NSFileManager.defaultManager()
-		let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
-		return url!.URLByAppendingPathComponent("memesArray").path!
+		let manager = FileManager.default
+		let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first
+		return url!.appendingPathComponent("memesArray").path
 	}
 
 
-	@IBAction func pickAnImage(sender: AnyObject) {
-		launchImagePicker(UIImagePickerControllerSourceType.PhotoLibrary)
+	@IBAction func pickAnImage(_ sender: AnyObject) {
+		launchImagePicker(UIImagePickerControllerSourceType.photoLibrary)
 	}
 
 
-	@IBAction func takePicture(sender: AnyObject) {
-		launchImagePicker(UIImagePickerControllerSourceType.Camera)
+	@IBAction func takePicture(_ sender: AnyObject) {
+		launchImagePicker(UIImagePickerControllerSourceType.camera)
 	}
 
 
 	//Except for the source type, the process for launching the camera to use a newly-taken photo is identical to the process for picking an image from the album.
-	func launchImagePicker(souceType: UIImagePickerControllerSourceType)
+	func launchImagePicker(_ souceType: UIImagePickerControllerSourceType)
 	{
 		let source = souceType
 		let imagePicker = UIImagePickerController()
 		imagePicker.delegate = self
 		imagePicker.sourceType = source
-		presentViewController(imagePicker, animated: true, completion: nil)
+		present(imagePicker, animated: true, completion: nil)
 	}
 
 
 	//When the meme is shared, it is also saved in the memes array.
-	@IBAction func shareMeme(sender: AnyObject) {
+	@IBAction func shareMeme(_ sender: AnyObject) {
 
 		let memedImage = generateMemedImage()
 
@@ -80,31 +80,31 @@ UINavigationControllerDelegate, UITextFieldDelegate
 			activityItems: [memedImage as UIImage],
 			applicationActivities: nil)
 
-		presentViewController(activityViewController, animated: true, completion: nil)
+		present(activityViewController, animated: true, completion: nil)
 
 	}
 
 
-	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
 			if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
 				imagePickerView.image = image
 
 				//The Share button can be shown once an image is chosen.
-				shareButton.enabled = true
+				shareButton.isEnabled = true
 			}
-			dismissViewControllerAnimated(true, completion: nil)
+			dismiss(animated: true, completion: nil)
 	}
 
 
-	override func viewWillAppear(animated: Bool) {
-		cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable	(UIImagePickerControllerSourceType.Camera)
+	override func viewWillAppear(_ animated: Bool) {
+		cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable	(UIImagePickerControllerSourceType.camera)
 
 		//MemeEditViewController needs to be notified when the keyboard is shown in case screen view needs to be moved out of the way.
 		subscribeToKeyboardNotifications()
 	}
 
 
-	override func viewWillDisappear(animated: Bool) {
+	override func viewWillDisappear(_ animated: Bool) {
 		unsubscribeFromKeyboardNotifications()
 	}
 
@@ -112,7 +112,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	override func viewDidLoad() {
 
 		//Unarchiving the saved array.
-		if let memesArray = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? [Meme] {
+		if let memesArray = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? [Meme] {
 			Memes.sharedInstance().memes = memesArray
 		}
 
@@ -130,18 +130,18 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		bottomText.text = "EDIT BOTTOM TEXT"
 
 		//The share button cannot be enabled until after an image is chosen.
-		shareButton.enabled = false
+		shareButton.isEnabled = false
 	}
 
 
-	func textFieldDidBeginEditing(textField: UITextField) {
+	func textFieldDidBeginEditing(_ textField: UITextField) {
 		//This clears the default text.
 		textField.text = ""
 	}
 
 
 	//Text is processed when the return key is pressed.
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
 		return true;
 	}
@@ -149,61 +149,61 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 	//Called in viewWillAppear.
 	func subscribeToKeyboardNotifications() {
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditViewController.keyboardWillShow(_:))	, name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditViewController.keyboardWillHide(_:))	, name: UIKeyboardWillHideNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(MemeEditViewController.keyboardWillShow(_:))	, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(MemeEditViewController.keyboardWillHide(_:))	, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 	}
 
 
 	//Called in viewWillDisappear.
 	func unsubscribeFromKeyboardNotifications() {
-		NSNotificationCenter.defaultCenter().removeObserver(self, name:
-			UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().removeObserver(self, name:
-			UIKeyboardWillHideNotification, object: nil)
+		NotificationCenter.default.removeObserver(self, name:
+			NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.removeObserver(self, name:
+			NSNotification.Name.UIKeyboardWillHide, object: nil)
 	}
 
 
-	func keyboardWillShow(notification: NSNotification) {
+	func keyboardWillShow(_ notification: Notification) {
 		//The keyboard only slides away if the top text field is edited.
-		if bottomText.editing == true
+		if bottomText.isEditing == true
 		{
 			view.frame.origin.y -= getKeyboardHeight(notification)
 		}
 	}
 
 
-	func keyboardWillHide(notification: NSNotification) {
+	func keyboardWillHide(_ notification: Notification) {
 		//The keyboard only slides away if the top text field is edited.
-		if bottomText.editing == true
+		if bottomText.isEditing == true
 		{
 			view.frame.origin.y += getKeyboardHeight(notification)
 		}
 	}
 
 
-	func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+	func getKeyboardHeight(_ notification: Notification) -> CGFloat {
 		//The vertical slide distance is set dynamically depending on the height of the keyboard.
-		let userInfo = notification.userInfo
+		let userInfo = (notification as NSNotification).userInfo
 		let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-		return keyboardSize.CGRectValue().height
+		return keyboardSize.cgRectValue.height
 	}
 
 
 	func generateMemedImage() -> UIImage
 	{
 		//The top navigation bar and bottom toolbar will not be included in the meme image.
-		topBar.hidden = true
-		bottomBar.hidden = true
+		topBar.isHidden = true
+		bottomBar.isHidden = true
 
 		//Saves the screen view as memedImage.
 		UIGraphicsBeginImageContext(view.frame.size)
-		view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
-		let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+		view.drawHierarchy(in: view.frame, afterScreenUpdates: true)
+		let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
 		UIGraphicsEndImageContext()
 
 		//Unhiding the navigation bar and toolbar.
-		topBar.hidden = false
-		bottomBar.hidden = false
+		topBar.isHidden = false
+		bottomBar.isHidden = false
 
 		return memedImage
 	}

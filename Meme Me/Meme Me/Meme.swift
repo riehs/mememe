@@ -13,8 +13,8 @@ class Meme: NSCoder {
 
 	let topText: String
 	let bottomText: String
-	let image: NSData
-	let memedImage: NSData
+	let image: Data
+	let memedImage: Data
 
 	init(topText: String, bottomText: String, image: UIImage, memedImage: UIImage) {
 
@@ -28,19 +28,19 @@ class Meme: NSCoder {
 
 
 	//Required for the class to conform to the NSCoding protocol.
-	func encodeWithCoder(aCoder: NSCoder!) {
-		aCoder.encodeObject(topText, forKey:"topText")
-		aCoder.encodeObject(bottomText, forKey:"bottomText")
-		aCoder.encodeObject(image, forKey:"image")
-		aCoder.encodeObject(memedImage, forKey:"memedImage")
+	func encodeWithCoder(_ aCoder: NSCoder!) {
+		aCoder.encode(topText, forKey:"topText")
+		aCoder.encode(bottomText, forKey:"bottomText")
+		aCoder.encode(image, forKey:"image")
+		aCoder.encode(memedImage, forKey:"memedImage")
 	}
 
 
 	//Required for the class to conform to the NSCoding protocol.
 	init(coder aDecoder: NSCoder!) {
-		topText = aDecoder.decodeObjectForKey("topText") as! String
-		bottomText = aDecoder.decodeObjectForKey("bottomText") as! String
-		image = aDecoder.decodeObjectForKey("image") as! NSData
-		memedImage = aDecoder.decodeObjectForKey("memedImage") as! NSData
+		topText = aDecoder.decodeObject(forKey: "topText") as! String
+		bottomText = aDecoder.decodeObject(forKey: "bottomText") as! String
+		image = aDecoder.decodeObject(forKey: "image") as! Data
+		memedImage = aDecoder.decodeObject(forKey: "memedImage") as! Data
 	}
 }

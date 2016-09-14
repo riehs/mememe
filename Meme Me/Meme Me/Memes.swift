@@ -26,14 +26,14 @@ class Memes: NSCoder {
 
 	//Required for the class to conform to the NSCoding protocol.
 	required init(coder aDecoder: NSCoder) {
-		if let memes = aDecoder.decodeObjectForKey("memesArray") as? [Meme] {
+		if let memes = aDecoder.decodeObject(forKey: "memesArray") as? [Meme] {
 			self.memes = memes
 		}
 	}
 
 
 	//Required for the class to conform to the NSCoding protocol.
-	func encodeWithCoder(aCoder: NSCoder) {
-		aCoder.encodeObject(self.memes, forKey: "memesArray")
+	func encodeWithCoder(_ aCoder: NSCoder) {
+		aCoder.encode(self.memes, forKey: "memesArray")
 	}
 }
