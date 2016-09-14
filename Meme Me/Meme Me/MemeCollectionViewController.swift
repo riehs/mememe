@@ -12,15 +12,15 @@ class MemeCollectionViewController: UICollectionViewController
 {
 
 
-	override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return Memes.sharedInstance().memes.count
 	}
 
 
-	override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CustomMemeCell", forIndexPath: indexPath) 
-		let meme = Memes.sharedInstance().memes[indexPath.item]
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMemeCell", for: indexPath) 
+		let meme = Memes.sharedInstance().memes[(indexPath as NSIndexPath).item]
 
 
 		//A memed image displays in each cell.
@@ -31,12 +31,12 @@ class MemeCollectionViewController: UICollectionViewController
 
 
 	//Selecting an item navigates the user to a detail view of the meme.
-	override func collectionView(tableView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+	override func collectionView(_ tableView: UICollectionView, didSelectItemAt indexPath: IndexPath)
 	{
 		let storyboard = UIStoryboard (name: "Main", bundle: nil)
-		let resultVC = storyboard.instantiateViewControllerWithIdentifier("memeImageDetail") as! MemeDetailViewController
+		let resultVC = storyboard.instantiateViewController(withIdentifier: "memeImageDetail") as! MemeDetailViewController
 		navigationController?.pushViewController(resultVC, animated: true)
 
-		resultVC.meme = Memes.sharedInstance().memes[indexPath.row]
+		resultVC.meme = Memes.sharedInstance().memes[(indexPath as NSIndexPath).row]
 	}
 }
