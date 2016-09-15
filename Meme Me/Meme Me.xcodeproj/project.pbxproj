@@ -187,10 +187,12 @@
 				TargetAttributes = {
 					A23F8E1B1AB64FBB00C0B830 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = CWQL44X59A;
 						LastSwiftMigration = 0800;
 					};
 					A23F8E301AB64FBB00C0B830 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = CWQL44X59A;
 						LastSwiftMigration = 0800;
 						TestTargetID = A23F8E1B1AB64FBB00C0B830;
 					};
@@ -307,8 +309,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = CWQL44X59A;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -353,8 +357,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = CWQL44X59A;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
