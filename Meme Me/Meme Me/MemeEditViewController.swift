@@ -143,7 +143,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		}
 		
 		if error != nil {
-			print("Error in fetchAllMemes(): \(error)")
+			print("Error in fetchAllMemes(): \(String(describing: error))")
 		}
 		
 		return results as! [Meme]
