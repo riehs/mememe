@@ -25,13 +25,13 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	@IBOutlet weak var bottomBar: UIToolbar!
 
 	let memeTextAttributes = [
-		NSStrokeColorAttributeName : UIColor.black,
-		NSForegroundColorAttributeName : UIColor.white,
-		NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
+		NSAttributedStringKey.strokeColor.rawValue : UIColor.black,
+		NSAttributedStringKey.foregroundColor : UIColor.white,
+		NSAttributedStringKey.font : UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
 
 		//If this number is positive, the text foreground color does not display.
-		NSStrokeWidthAttributeName : -3.0,
-	] as [String : Any]
+		NSAttributedStringKey.strokeWidth : -3.0,
+	] as! [String : Any]
 
 
 	//Defining the file path where the archived data will be stored by the NSKeyedArchiver.
@@ -163,7 +163,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	}
 
 
-	func keyboardWillShow(_ notification: Notification) {
+	@objc func keyboardWillShow(_ notification: Notification) {
 		//The keyboard only slides away if the top text field is edited.
 		if bottomText.isEditing == true
 		{
@@ -172,7 +172,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	}
 
 
-	func keyboardWillHide(_ notification: Notification) {
+	@objc func keyboardWillHide(_ notification: Notification) {
 		//The keyboard only slides away if the top text field is edited.
 		if bottomText.isEditing == true
 		{
