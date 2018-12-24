@@ -32,7 +32,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 		//If this number is positive, the text foreground color does not display.
 		NSAttributedStringKey.strokeWidth : -3.0,
-	] as! [String : Any]
+		] as! [String : Any]
 
 
 	@IBAction func pickAnImage(_ sender: AnyObject) {
