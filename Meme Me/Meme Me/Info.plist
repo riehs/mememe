@@ -6,6 +6,8 @@
 	<string>The app allows users to modify photos.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>The app allows users to take photos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>The app allows users to save photos.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

@@ -28,7 +28,7 @@ class Meme: NSCoder {
 
 
 	//Required for the class to conform to the NSCoding protocol.
-	func encodeWithCoder(_ aCoder: NSCoder!) {
+	@objc func encodeWithCoder(_ aCoder: NSCoder!) {
 		aCoder.encode(topText, forKey:"topText")
 		aCoder.encode(bottomText, forKey:"bottomText")
 		aCoder.encode(image, forKey:"image")
@@ -37,7 +37,7 @@ class Meme: NSCoder {
 
 
 	//Required for the class to conform to the NSCoding protocol.
-	init(coder aDecoder: NSCoder!) {
+	@objc init(coder aDecoder: NSCoder!) {
 		topText = aDecoder.decodeObject(forKey: "topText") as! String
 		bottomText = aDecoder.decodeObject(forKey: "bottomText") as! String
 		image = aDecoder.decodeObject(forKey: "image") as! Data
