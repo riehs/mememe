@@ -47,8 +47,8 @@ class MemeTableViewController: UITableViewController
 
 
 	//Deleting a meme:
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-		if editingStyle == UITableViewCellEditingStyle.delete {
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == UITableViewCell.EditingStyle.delete {
 
 			//Remove the deleted meme from the Core Data context.
 			CoreDataStackManager.sharedInstance().managedObjectContext.delete(Memes.sharedInstance().memes[(indexPath as NSIndexPath).row] as NSManagedObject)
@@ -60,7 +60,7 @@ class MemeTableViewController: UITableViewController
 			CoreDataStackManager.sharedInstance().saveContext()
 
 			//Delete the meme from the tableView.
-			tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+			tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
 		}
 	}
 }
