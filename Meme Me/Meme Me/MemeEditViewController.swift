@@ -25,12 +25,12 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	@IBOutlet weak var bottomBar: UIToolbar!
 
 	let memeTextAttributes = [
-		NSAttributedStringKey.strokeColor.rawValue : UIColor.black,
-		NSAttributedStringKey.foregroundColor : UIColor.white,
-		NSAttributedStringKey.font : UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
+		NSAttributedString.Key.strokeColor.rawValue : UIColor.black,
+		NSAttributedString.Key.foregroundColor : UIColor.white,
+		NSAttributedString.Key.font : UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
 
 		//If this number is positive, the text foreground color does not display.
-		NSAttributedStringKey.strokeWidth : -3.0,
+		NSAttributedString.Key.strokeWidth : -3.0,
 	] as! [String : Any]
 
 
@@ -43,17 +43,17 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 
 	@IBAction func pickAnImage(_ sender: AnyObject) {
-		launchImagePicker(UIImagePickerControllerSourceType.photoLibrary)
+		launchImagePicker(UIImagePickerController.SourceType.photoLibrary)
 	}
 
 
 	@IBAction func takePicture(_ sender: AnyObject) {
-		launchImagePicker(UIImagePickerControllerSourceType.camera)
+		launchImagePicker(UIImagePickerController.SourceType.camera)
 	}
 
 
 	//Except for the source type, the process for launching the camera to use a newly-taken photo is identical to the process for picking an image from the album.
-	func launchImagePicker(_ souceType: UIImagePickerControllerSourceType)
+	func launchImagePicker(_ souceType: UIImagePickerController.SourceType)
 	{
 		let source = souceType
 		let imagePicker = UIImagePickerController()
@@ -85,8 +85,11 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	}
 
 
-	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
-			if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+			if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
 				imagePickerView.image = image
 
 				//The Share button can be shown once an image is chosen.
@@ -97,7 +100,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 
 	override func viewWillAppear(_ animated: Bool) {
-		cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable	(UIImagePickerControllerSourceType.camera)
+		cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable	(UIImagePickerController.SourceType.camera)
 
 		//MemeEditViewController needs to be notified when the keyboard is shown in case screen view needs to be moved out of the way.
 		subscribeToKeyboardNotifications()
@@ -119,8 +122,8 @@ UINavigationControllerDelegate, UITextFieldDelegate
 		topText.delegate = self
 		bottomText.delegate = self
 
-		topText.defaultTextAttributes = memeTextAttributes
-		bottomText.defaultTextAttributes = memeTextAttributes
+		topText.defaultTextAttributes = convertToNSAttributedStringKeyDictionary(memeTextAttributes)
+		bottomText.defaultTextAttributes = convertToNSAttributedStringKeyDictionary(memeTextAttributes)
 
 		//1 = Center
 		topText.textAlignment = NSTextAlignment(rawValue: 1)!
@@ -149,17 +152,17 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 	//Called in viewWillAppear.
 	func subscribeToKeyboardNotifications() {
-		NotificationCenter.default.addObserver(self, selector: #selector(MemeEditViewController.keyboardWillShow(_:))	, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(MemeEditViewController.keyboardWillHide(_:))	, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(MemeEditViewController.keyboardWillShow(_:))	, name: UIResponder.keyboardWillShowNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(MemeEditViewController.keyboardWillHide(_:))	, name: UIResponder.keyboardWillHideNotification, object: nil)
 	}
 
 
 	//Called in viewWillDisappear.
 	func unsubscribeFromKeyboardNotifications() {
 		NotificationCenter.default.removeObserver(self, name:
-			NSNotification.Name.UIKeyboardWillShow, object: nil)
+			UIResponder.keyboardWillShowNotification, object: nil)
 		NotificationCenter.default.removeObserver(self, name:
-			NSNotification.Name.UIKeyboardWillHide, object: nil)
+			UIResponder.keyboardWillHideNotification, object: nil)
 	}
 
 
@@ -184,7 +187,7 @@ UINavigationControllerDelegate, UITextFieldDelegate
 	func getKeyboardHeight(_ notification: Notification) -> CGFloat {
 		//The vertical slide distance is set dynamically depending on the height of the keyboard.
 		let userInfo = (notification as NSNotification).userInfo
-		let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+		let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
 		return keyboardSize.cgRectValue.height
 	}
 
@@ -207,4 +210,19 @@ UINavigationControllerDelegate, UITextFieldDelegate
 
 		return memedImage
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSAttributedStringKeyDictionary(_ input: [String: Any]) -> [NSAttributedString.Key: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

@@ -55,8 +55,8 @@ class MemeTableViewController: UITableViewController
 
 
 	//Deleting a meme:
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-		if editingStyle == UITableViewCellEditingStyle.delete {
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == UITableViewCell.EditingStyle.delete {
 
 			//Remove the deleted meme from the array.
 			Memes.sharedInstance().memes.remove(at: (indexPath as NSIndexPath).row)
@@ -65,7 +65,7 @@ class MemeTableViewController: UITableViewController
 			NSKeyedArchiver.archiveRootObject(Memes.sharedInstance().memes, toFile: filePath)
 
 			//Delete the meme from the tableView.
-			tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+			tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
 		}
 	}
 }

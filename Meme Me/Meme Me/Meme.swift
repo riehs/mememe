@@ -22,8 +22,8 @@ class Meme: NSCoder {
 		self.bottomText = bottomText
 
 		//The '1' means that the images are stored at the highest quality.
-		self.image = UIImageJPEGRepresentation(image, 1)!
-		self.memedImage = UIImageJPEGRepresentation(memedImage, 1)!
+		self.image = image.jpegData(compressionQuality: 1)!
+		self.memedImage = memedImage.jpegData(compressionQuality: 1)!
 	}
 
 
